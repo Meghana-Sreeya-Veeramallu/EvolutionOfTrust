@@ -1,8 +1,9 @@
 package org.example;
 
+import org.example.Entities.AlwaysCheatPlayer;
+import org.example.Entities.AlwaysCooperatePlayer;
 import org.example.Entities.Game;
 import org.example.Entities.Player;
-import org.example.Enums.PlayerType;
 import org.example.Exceptions.CannotPlayWithoutPlayersException;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +14,8 @@ public class GameTest {
     // Tests for Game class
     @Test
     void testGameInitialization() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         assertNotNull(game);
@@ -28,8 +29,8 @@ public class GameTest {
     // Tests for round() method
     @Test
     void testBothPlayersCooperate() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(1);
@@ -40,8 +41,8 @@ public class GameTest {
 
     @Test
      void testFirstPlayerCooperatesSecondPlayerCheats() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(1);
@@ -52,8 +53,8 @@ public class GameTest {
 
     @Test
      void testFirstPlayerCheatsSecondPlayerCooperates() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(1);
@@ -64,8 +65,8 @@ public class GameTest {
 
     @Test
      void testBothPlayersCheat() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(1);
@@ -76,8 +77,8 @@ public class GameTest {
 
     @Test
     void testBothPlayersCheatFiveRounds() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(5);
@@ -88,8 +89,8 @@ public class GameTest {
 
     @Test
     void testBothPlayersCooperateFiveRounds() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(5);
@@ -100,8 +101,8 @@ public class GameTest {
 
     @Test
     void testFirstPlayerCooperatesSecondPlayerCheatsFiveRounds() {
-        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
-        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(5);
