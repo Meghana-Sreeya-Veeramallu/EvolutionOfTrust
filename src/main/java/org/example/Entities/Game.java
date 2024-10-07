@@ -15,20 +15,26 @@ public class Game {
         this.player2 = player2;
     }
 
-    public void round() {
-        if (player1.getMove()== Action.COOPERATE  && player2.getMove()== Action.COOPERATE) {
-            // Both cooperate: 2 coins each
+    private void round() {
+        if (player1.getMove() == Action.COOPERATE  && player2.getMove() == Action.COOPERATE) {
+            // Both cooperate: +2 each
             player1.addTwo();
             player2.addTwo();
-        } else if (player1.getMove()== Action.COOPERATE) {
-            // Player 1 cooperates, Player 2 cheats: Player 1 loses 1 coin, Player 2 gains 3 coins
+        } else if (player1.getMove() == Action.COOPERATE) {
+            // Player 1 cooperates, Player 2 cheats: Player 1: -1, Player 2: +3
             player1.deduct();
             player2.addThree();
-        } else if (player2.getMove()== Action.COOPERATE) {
-            // Player 1 cheats, Player 2 cooperates: : Player 1 gains 3 coins, Player 2 loses 1 coin
+        } else if (player2.getMove() == Action.COOPERATE) {
+            // Player 1 cheats, Player 2 cooperates: : Player 1: +3, Player 2: -1
             player1.addThree();
             player2.deduct();
         }
         // Both cheat: Nothing happens
+    }
+
+    public void play(int rounds) {
+        for (int i = 0; i < rounds; i++) {
+            round();
+        }
     }
 }
