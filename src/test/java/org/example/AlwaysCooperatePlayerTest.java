@@ -10,9 +10,33 @@ import static org.junit.jupiter.api.Assertions.*;
 class AlwaysCooperatePlayerTest {
 
     @Test
-    void testPlayerAlwaysCooperateShouldStartWithZeroCoins() {
+    void testAlwaysCooperatePlayerShouldStartWithZeroCoins() {
         Player player = new AlwaysCooperatePlayer();
         int expected = 0;
+
+        int actual = player.getScore();
+
+        assertEquals(expected, actual);
+    }
+
+    // Tests for gain() method
+    @Test
+    void testPlayerShouldGainCorrectly() {
+        Player player = new AlwaysCooperatePlayer();
+        player.gain();
+        int expected = 3;
+
+        int actual = player.getScore();
+
+        assertEquals(expected, actual);
+    }
+
+    // Tests for invest() method
+    @Test
+    void testPlayerShouldInvestCorrectly() {
+        Player player = new AlwaysCooperatePlayer();
+        player.invest();
+        int expected = -1;
 
         int actual = player.getScore();
 

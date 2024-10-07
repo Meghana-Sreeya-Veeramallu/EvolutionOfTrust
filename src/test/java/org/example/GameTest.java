@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.Entities.AlwaysCheatPlayer;
-import org.example.Entities.AlwaysCooperatePlayer;
-import org.example.Entities.Game;
-import org.example.Entities.Player;
+import org.example.Entities.*;
 import org.example.Exceptions.CannotPlayWithoutPlayersException;
 import org.junit.jupiter.api.Test;
 
@@ -109,5 +106,41 @@ public class GameTest {
 
         assertEquals(-5, firstPlayer.getScore());
         assertEquals(15, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerCopycatSecondPlayerAlwaysCheats() {
+        Player firstPlayer = new CopycatPlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(0, firstPlayer.getScore());
+        assertEquals(0, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerCopycatSecondPlayerAlwaysCooperates() {
+        Player firstPlayer = new CopycatPlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(11, firstPlayer.getScore());
+        assertEquals(7, secondPlayer.getScore());
+    }
+
+    @Test
+    void testBothPlayersCopycats() {
+        Player firstPlayer = new CopycatPlayer();
+        Player secondPlayer = new CopycatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(0, firstPlayer.getScore());
+        assertEquals(0, secondPlayer.getScore());
     }
 }

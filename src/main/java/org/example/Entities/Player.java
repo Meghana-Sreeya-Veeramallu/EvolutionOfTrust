@@ -29,11 +29,11 @@ public abstract class Player {
 
     protected abstract Move getMove();
 
-    private void gain() {
+    public void gain() {
         this.score += 3;
     }
 
-    private void invest() {
+    public void invest() {
         this.score -= 1;
     }
 }
