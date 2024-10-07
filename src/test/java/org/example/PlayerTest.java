@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.Entities.Player;
-import org.example.Enums.Action;
+import org.example.Enums.Move;
 import org.example.Enums.PlayerType;
 import org.junit.jupiter.api.Test;
 
@@ -29,36 +29,36 @@ class PlayerTest {
         assertEquals(expected, actual);
     }
 
-    // Tests for add() method
+    // Tests for gain() method
     @Test
-    void testPlayerShouldAddCorrectly() {
+    void testPlayerShouldGainCorrectly() {
         Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.addTwo();
-        int expected = 2;
+        player.gain();
+        int expected = 3;
 
         int actual = player.getScore();
 
         assertEquals(expected, actual);
     }
 
-    // Tests for deduct() method
+    // Tests for invest() method
     @Test
-    void testPlayerShouldDeductCorrectly() {
+    void testPlayerShouldInvestCorrectly() {
         Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.addThree();
-        player.deduct();
-        int expected = 2;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testPlayerShouldHaveNegativeCoinsIfDeductedMoreThanAdded() {
-        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.deduct();
+        player.invest();
         int expected = -1;
+
+        int actual = player.getScore();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testPlayerInvestAfterGain() {
+        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
+        player.gain();
+        player.invest();
+        int expected = 2;
 
         int actual = player.getScore();
 
@@ -69,12 +69,12 @@ class PlayerTest {
     @Test
     public void testGetMoveForAlwaysCooperative() {
         Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        assertEquals(Action.COOPERATE, player.getMove());
+        assertEquals(Move.COOPERATE, player.getMove());
     }
 
     @Test
     public void testGetMoveForAlwaysCheat() {
         Player player = new Player(PlayerType.ALWAYS_CHEAT);
-        assertEquals(Action.CHEAT, player.getMove());
+        assertEquals(Move.CHEAT, player.getMove());
     }
 }

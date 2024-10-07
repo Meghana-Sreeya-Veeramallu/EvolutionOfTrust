@@ -1,6 +1,6 @@
 package org.example.Entities;
 
-import org.example.Enums.Action;
+import org.example.Enums.Move;
 import org.example.Enums.PlayerType;
 
 public class Player {
@@ -16,23 +16,20 @@ public class Player {
         return score;
     }
 
-    public void addTwo() {
-        this.score += 2;
-    }
-
-    public void addThree() {
+    public void gain() {
         this.score += 3;
     }
 
-    public void deduct() {
+    public void invest() {
         this.score -= 1;
     }
-    public Action getMove() {
+
+    public Move getMove() {
         if (this.playerType == PlayerType.ALWAYS_COOPERATE) {
-            return Action.COOPERATE;
+            return Move.COOPERATE;
         }
         else{
-            return Action.CHEAT;
+            return Move.CHEAT;
         }
     }
 }

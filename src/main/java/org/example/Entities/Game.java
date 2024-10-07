@@ -1,6 +1,6 @@
 package org.example.Entities;
 
-import org.example.Enums.Action;
+import org.example.Enums.Move;
 import org.example.Exceptions.CannotPlayWithoutPlayersException;
 
 public class Game {
@@ -16,20 +16,18 @@ public class Game {
     }
 
     private void round() {
-        if (player1.getMove() == Action.COOPERATE  && player2.getMove() == Action.COOPERATE) {
-            // Both cooperate: +2 each
-            player1.addTwo();
-            player2.addTwo();
-        } else if (player1.getMove() == Action.COOPERATE) {
-            // Player 1 cooperates, Player 2 cheats: Player 1: -1, Player 2: +3
-            player1.deduct();
-            player2.addThree();
-        } else if (player2.getMove() == Action.COOPERATE) {
-            // Player 1 cheats, Player 2 cooperates: : Player 1: +3, Player 2: -1
-            player1.addThree();
-            player2.deduct();
+         if (player1.getMove() == Move.COOPERATE) {
+            // Player 1 cooperates - Player 1: -1, Player 2: +3
+            player1.invest();
+            player2.gain();
         }
-        // Both cheat: Nothing happens
+         if (player2.getMove() == Move.COOPERATE) {
+            // Player 2 cooperates - : Player 1: +3, Player 2: -1
+            player1.gain();
+            player2.invest();
+        }
+         // Both cooperate: +2 each ( -1 + 3 = +2)
+         // Both cheat: Nothing happens
     }
 
     public void play(int rounds) {

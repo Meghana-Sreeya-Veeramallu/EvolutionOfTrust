@@ -1,5 +1,5 @@
 package org.example.Enums;
 
-public enum Action {
+public enum Move {
     CHEAT, COOPERATE
 }
