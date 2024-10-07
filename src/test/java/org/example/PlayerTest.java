@@ -1,7 +1,7 @@
 package org.example;
 
+import org.example.Entities.Game;
 import org.example.Entities.Player;
-import org.example.Enums.Move;
 import org.example.Enums.PlayerType;
 import org.junit.jupiter.api.Test;
 
@@ -29,52 +29,49 @@ class PlayerTest {
         assertEquals(expected, actual);
     }
 
-    // Tests for gain() method
+    // Tests for round() method
     @Test
-    void testPlayerShouldGainCorrectly() {
-        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.gain();
-        int expected = 3;
+    void testBothPlayersCooperate() {
+        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
 
-        int actual = player.getScore();
+        firstPlayer.playWith(secondPlayer);
 
-        assertEquals(expected, actual);
-    }
-
-    // Tests for invest() method
-    @Test
-    void testPlayerShouldInvestCorrectly() {
-        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.invest();
-        int expected = -1;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
+        assertEquals(2, firstPlayer.getScore());
+        assertEquals(2, secondPlayer.getScore());
     }
 
     @Test
-    void testPlayerInvestAfterGain() {
-        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        player.gain();
-        player.invest();
-        int expected = 2;
+    void testFirstPlayerCooperatesSecondPlayerCheats() {
+        Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
 
-        int actual = player.getScore();
+        firstPlayer.playWith(secondPlayer);
 
-        assertEquals(expected, actual);
-    }
-
-    // Tests for getMove() method
-    @Test
-    public void testGetMoveForAlwaysCooperative() {
-        Player player = new Player(PlayerType.ALWAYS_COOPERATE);
-        assertEquals(Move.COOPERATE, player.getMove());
+        assertEquals(-1, firstPlayer.getScore());
+        assertEquals(3, secondPlayer.getScore());
     }
 
     @Test
-    public void testGetMoveForAlwaysCheat() {
-        Player player = new Player(PlayerType.ALWAYS_CHEAT);
-        assertEquals(Move.CHEAT, player.getMove());
+    void testFirstPlayerCheatsSecondPlayerCooperates() {
+        Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(3, firstPlayer.getScore());
+        assertEquals(-1, secondPlayer.getScore());
     }
+
+    @Test
+    void testBothPlayersCheat() {
+        Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+        Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(0, firstPlayer.getScore());
+        assertEquals(0, secondPlayer.getScore());
+    }
+
 }

@@ -16,15 +16,30 @@ public class Player {
         return score;
     }
 
-    public void gain() {
+    public void playWith(Player otherPlayer) {
+        if (this.getMove() == Move.COOPERATE) {
+            // Player 1 cooperates - Player 1: -1, Player 2: +3
+            this.invest();
+            otherPlayer.gain();
+        }
+        if (otherPlayer.getMove() == Move.COOPERATE) {
+            // Player 2 cooperates - : Player 1: +3, Player 2: -1
+            this.gain();
+            otherPlayer.invest();
+        }
+        // Both cooperate: +2 each ( -1 + 3 = +2)
+        // Both cheat: Nothing happens
+    }
+
+    private void gain() {
         this.score += 3;
     }
 
-    public void invest() {
+    private void invest() {
         this.score -= 1;
     }
 
-    public Move getMove() {
+    private Move getMove() {
         if (this.playerType == PlayerType.ALWAYS_COOPERATE) {
             return Move.COOPERATE;
         }

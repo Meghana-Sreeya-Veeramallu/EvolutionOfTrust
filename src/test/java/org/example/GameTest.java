@@ -39,7 +39,7 @@ public class GameTest {
     }
 
     @Test
-     void testfirstPlayerCooperatessecondPlayerCheats() {
+     void testFirstPlayerCooperatesSecondPlayerCheats() {
         Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
         Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
         Game game = new Game(firstPlayer, secondPlayer);
@@ -51,7 +51,7 @@ public class GameTest {
     }
 
     @Test
-     void testfirstPlayerCheatssecondPlayerCooperates() {
+     void testFirstPlayerCheatsSecondPlayerCooperates() {
         Player firstPlayer = new Player(PlayerType.ALWAYS_CHEAT);
         Player secondPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
         Game game = new Game(firstPlayer, secondPlayer);
@@ -99,7 +99,7 @@ public class GameTest {
     }
 
     @Test
-    void testfirstPlayerCooperatessecondPlayerCheatsFiveRounds() {
+    void testFirstPlayerCooperatesSecondPlayerCheatsFiveRounds() {
         Player firstPlayer = new Player(PlayerType.ALWAYS_COOPERATE);
         Player secondPlayer = new Player(PlayerType.ALWAYS_CHEAT);
         Game game = new Game(firstPlayer, secondPlayer);
