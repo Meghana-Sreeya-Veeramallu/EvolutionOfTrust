@@ -1,83 +1,76 @@
 package org.example;
 
+import org.example.Entities.Game;
+import org.example.Entities.Player;
+import org.example.Enums.PlayerType;
+import org.example.Exceptions.CannotPlayWithoutPlayersException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
+
+    // Tests for Game class
+    @Test
+    void testGameInitialization() {
+        Player player1 = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player player2 = new Player(PlayerType.ALWAYS_COOPERATE);
+        Game game = new Game(player1, player2);
+
+        assertNotNull(game);
+    }
+
+    @Test
+    void testExceptionWhenPlayerIsNull() {
+        assertThrows(CannotPlayWithoutPlayersException.class, () -> new Game(null, null));
+    }
+
     // Tests for round() method
     @Test
-    void testBothCooperate() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+    void testBothPlayersCooperate() {
+        Player player1 = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player player2 = new Player(PlayerType.ALWAYS_COOPERATE);
         Game game = new Game(player1, player2);
 
-        game.round(true, true);
+        game.round();
 
-        assertEquals(2, player1.getCoins());
-        assertEquals(2, player2.getCoins());
+        assertEquals(2, player1.getScore());
+        assertEquals(2, player2.getScore());
     }
 
     @Test
-    void testPlayer1CooperatesPlayer2Cheats() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+     void testPlayer1CooperatesPlayer2Cheats() {
+        Player player1 = new Player(PlayerType.ALWAYS_COOPERATE);
+        Player player2 = new Player(PlayerType.ALWAYS_CHEAT);
         Game game = new Game(player1, player2);
 
-        game.round(true, false);
+        game.round();
 
-        assertEquals(-1, player1.getCoins());
-        assertEquals(3, player2.getCoins());
+        assertEquals(-1, player1.getScore());
+        assertEquals(3, player2.getScore());
     }
 
     @Test
-    void testPlayer1CheatsPlayer2Cooperates() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+     void testPlayer1CheatsPlayer2Cooperates() {
+        Player player1 = new Player(PlayerType.ALWAYS_CHEAT);
+        Player player2 = new Player(PlayerType.ALWAYS_COOPERATE);
         Game game = new Game(player1, player2);
 
-        game.round(false, true);
+        game.round();
 
-        assertEquals(3, player1.getCoins());
-        assertEquals(-1, player2.getCoins());
+        assertEquals(3, player1.getScore());
+        assertEquals(-1, player2.getScore());
     }
 
     @Test
-     void testBothCheat() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+     void testBothPlayersCheat() {
+        Player player1 = new Player(PlayerType.ALWAYS_CHEAT);
+        Player player2 = new Player(PlayerType.ALWAYS_CHEAT);
         Game game = new Game(player1, player2);
 
-        game.round(false, false);
+        game.round();
 
-        assertEquals(0, player1.getCoins());
-        assertEquals(0, player2.getCoins());
-    }
-
-    @Test
-     void testPlayWithMultipleRounds() {
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Game game = new Game(player1, player2);
-
-        game.round(true, true);  // Round 1: Both cooperate
-        game.round(true, false); // Round 2: Player 1 cooperates, Player 2 cheats
-        game.round(false, true); // Round 3: Player 1 cheats, Player 2 cooperates
-        game.round(false, false); // Round 4: Both cheat
-
-        assertEquals(4, player1.getCoins());
-        assertEquals(4, player2.getCoins());
-    }
-
-    @Test
-     void testPlayMultipleRounds() {
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Game game = new Game(player1, player2);
-
-        game.play(5);
-
-        assertTrue(player1.getCoins() >= 0);
-        assertTrue(player2.getCoins() >= 0);
+        assertEquals(0, player1.getScore());
+        assertEquals(0, player2.getScore());
     }
 }
