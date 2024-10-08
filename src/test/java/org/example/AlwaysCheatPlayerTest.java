@@ -17,30 +17,6 @@ class AlwaysCheatPlayerTest {
         assertEquals(expected, actual);
     }
 
-    // Tests for gain() method
-    @Test
-    void testPlayerShouldGainCorrectly() {
-        AlwaysCheatPlayer player = new AlwaysCheatPlayer();
-        player.gain();
-        int expected = 3;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
-    // Tests for invest() method
-    @Test
-    void testPlayerShouldInvestCorrectly() {
-        AlwaysCheatPlayer player = new AlwaysCheatPlayer();
-        player.invest();
-        int expected = -1;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
     // Tests for playWith() method
     @Test
     void testBothPlayersCheat() {

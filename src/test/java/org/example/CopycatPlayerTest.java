@@ -17,30 +17,6 @@ class CopycatPlayerTest {
         assertEquals(expected, actual);
     }
 
-    // Tests for gain() method
-    @Test
-    void testPlayerShouldGainCorrectly() {
-        CopycatPlayer player = new CopycatPlayer();
-        player.gain();
-        int expected = 3;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
-    // Tests for invest() method
-    @Test
-    void testPlayerShouldInvestCorrectly() {
-        CopycatPlayer player = new CopycatPlayer();
-        player.invest();
-        int expected = -1;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
     // Tests for playWith() method
     @Test
     void testBothPlayersCopycats() {

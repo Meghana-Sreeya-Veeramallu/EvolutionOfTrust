@@ -34,11 +34,11 @@ public abstract class Player {
 
     protected abstract Move nextMove();
 
-    public void gain() {
+    private void gain() {
         this.score += 3;
     }
 
-    public void invest() {
+    private void invest() {
         this.score -= 1;
     }
 }

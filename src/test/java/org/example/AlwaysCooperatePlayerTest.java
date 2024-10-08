@@ -17,30 +17,6 @@ class AlwaysCooperatePlayerTest {
         assertEquals(expected, actual);
     }
 
-    // Tests for gain() method
-    @Test
-    void testPlayerShouldGainCorrectly() {
-        AlwaysCooperatePlayer player = new AlwaysCooperatePlayer();
-        player.gain();
-        int expected = 3;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
-    // Tests for invest() method
-    @Test
-    void testPlayerShouldInvestCorrectly() {
-        AlwaysCooperatePlayer player = new AlwaysCooperatePlayer();
-        player.invest();
-        int expected = -1;
-
-        int actual = player.getScore();
-
-        assertEquals(expected, actual);
-    }
-
     // Tests for playWith() method
     @Test
     void testBothPlayersCooperate() {
