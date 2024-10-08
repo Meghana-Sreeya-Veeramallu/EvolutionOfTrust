@@ -23,7 +23,7 @@ public class GameTest {
         assertThrows(CannotPlayWithoutPlayersException.class, () -> new Game(null, null));
     }
 
-    // Tests for round() method
+    // Tests for play(1) method
     @Test
     void testBothPlayersCooperate() {
         Player firstPlayer = new AlwaysCooperatePlayer();
@@ -61,7 +61,7 @@ public class GameTest {
     }
 
     @Test
-     void testBothPlayersCheat() {
+     void testBothPlayersAlwaysCheat() {
         Player firstPlayer = new AlwaysCheatPlayer();
         Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -72,8 +72,9 @@ public class GameTest {
         assertEquals(0, secondPlayer.getScore());
     }
 
+    // Tests for AlwaysCheatPlayer vs others
     @Test
-    void testBothPlayersCheatFiveRounds() {
+    void testBothPlayersAlwaysCheatsFiveRounds() {
         Player firstPlayer = new AlwaysCheatPlayer();
         Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -85,19 +86,44 @@ public class GameTest {
     }
 
     @Test
-    void testBothPlayersCooperateFiveRounds() {
-        Player firstPlayer = new AlwaysCooperatePlayer();
+    void testFirstPlayerAlwaysCheatsSecondPlayerAlwaysCooperatesFiveRounds() {
+        Player firstPlayer = new AlwaysCheatPlayer();
         Player secondPlayer = new AlwaysCooperatePlayer();
         Game game = new Game(firstPlayer, secondPlayer);
 
         game.play(5);
 
-        assertEquals(10, firstPlayer.getScore());
-        assertEquals(10, secondPlayer.getScore());
+        assertEquals(15, firstPlayer.getScore());
+        assertEquals(-5, secondPlayer.getScore());
     }
 
     @Test
-    void testFirstPlayerCooperatesSecondPlayerCheatsFiveRounds() {
+    void testFirstPlayerAlwaysCheatsSecondPlayerCopycatFiveRounds() {
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new CopycatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(0, firstPlayer.getScore());
+        assertEquals(0, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerAlwaysCheatsSecondPlayerDetectiveTenRounds() {
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new DetectivePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(9, firstPlayer.getScore());
+        assertEquals(-3, secondPlayer.getScore());
+    }
+
+    // Tests for AlwaysCooperatePlayer vs others
+    @Test
+    void testFirstPlayerAlwaysCooperatesSecondPlayerCheatsFiveRounds() {
         Player firstPlayer = new AlwaysCooperatePlayer();
         Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -109,7 +135,44 @@ public class GameTest {
     }
 
     @Test
-    void testFirstPlayerCopycatSecondPlayerAlwaysCheats() {
+    void testBothPlayersAlwaysCooperatesFiveRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(10, firstPlayer.getScore());
+        assertEquals(10, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerAlwaysCooperatesSecondPlayerCopycatFiveRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new CopycatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(5);
+
+        assertEquals(7, firstPlayer.getScore());
+        assertEquals(11, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerAlwaysCooperatesSecondPlayerDetectiveTenRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new DetectivePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(-1, firstPlayer.getScore());
+        assertEquals(27, secondPlayer.getScore());
+    }
+
+    // Tests for CopycatPlayer vs others
+    @Test
+    void testFirstPlayerCopycatSecondPlayerAlwaysCheatsFiveRounds() {
         Player firstPlayer = new CopycatPlayer();
         Player secondPlayer = new AlwaysCheatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -121,7 +184,7 @@ public class GameTest {
     }
 
     @Test
-    void testFirstPlayerCopycatSecondPlayerAlwaysCooperates() {
+    void testFirstPlayerCopycatSecondPlayerAlwaysCooperatesFiveRounds() {
         Player firstPlayer = new CopycatPlayer();
         Player secondPlayer = new AlwaysCooperatePlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -133,7 +196,7 @@ public class GameTest {
     }
 
     @Test
-    void testBothPlayersCopycats() {
+    void testBothPlayersCopycatsFiveRounds() {
         Player firstPlayer = new CopycatPlayer();
         Player secondPlayer = new CopycatPlayer();
         Game game = new Game(firstPlayer, secondPlayer);
@@ -142,5 +205,66 @@ public class GameTest {
 
         assertEquals(0, firstPlayer.getScore());
         assertEquals(0, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerCopycatSecondPlayerDetectiveTenRounds() {
+        Player firstPlayer = new CopycatPlayer();
+        Player secondPlayer = new DetectivePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(19, firstPlayer.getScore());
+        assertEquals(15, secondPlayer.getScore());
+    }
+
+    // Tests for DetectivePlayer vs others
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerAlwaysCheatsTenRounds() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(-3, firstPlayer.getScore());
+        assertEquals(9, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerAlwaysCooperatesTenRounds() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(27, firstPlayer.getScore());
+        assertEquals(-1, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerCopycatTenRounds() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new CopycatPlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(15, firstPlayer.getScore());
+        assertEquals(19, secondPlayer.getScore());
+    }
+
+    @Test
+    void testBothPlayersDetectivesTenRounds() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new DetectivePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        game.play(10);
+
+        assertEquals(18, firstPlayer.getScore());
+        assertEquals(18, secondPlayer.getScore());
     }
 }

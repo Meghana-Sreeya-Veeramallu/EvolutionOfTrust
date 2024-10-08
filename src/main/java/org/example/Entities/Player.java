@@ -34,7 +34,7 @@ public abstract class Player {
 
     protected abstract Move nextMove();
 
-    private void gain() {
+    protected void gain() {
         this.score += 3;
     }
 

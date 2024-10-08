@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.Entities.AlwaysCheatPlayer;
-import org.example.Entities.AlwaysCooperatePlayer;
-import org.example.Entities.CopycatPlayer;
-import org.example.Entities.Player;
+import org.example.Entities.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +30,17 @@ class PlayerTest {
         assertEquals(0, secondPlayer.getScore());
     }
 
+    @Test
+    void testFirstPlayerAlwaysCheatsSecondPlayerDetective() {
+        Player firstPlayer = new AlwaysCheatPlayer();
+        Player secondPlayer = new DetectivePlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(3, firstPlayer.getScore());
+        assertEquals(-1, secondPlayer.getScore());
+    }
+
     // Tests for playWith() method for AlwaysCooperatePlayer with others
     @Test
     void testFirstPlayerAlwaysCooperatesSecondPlayerAlwaysCheats() {
@@ -56,6 +64,17 @@ class PlayerTest {
         assertEquals(3, secondPlayer.getScore());
     }
 
+    @Test
+    void testFirstPlayerAlwaysCooperatesSecondPlayerDetective() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new DetectivePlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(2, firstPlayer.getScore());
+        assertEquals(2, secondPlayer.getScore());
+    }
+
     // Tests for playWith() method for CopycatPlayer with others
     @Test
     void testFirstPlayerCopycatSecondPlayerAlwaysCheats() {
@@ -77,5 +96,50 @@ class PlayerTest {
 
         assertEquals(3, firstPlayer.getScore());
         assertEquals(-1, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerCopycatSecondPlayerDetective() {
+        Player firstPlayer = new CopycatPlayer();
+        Player secondPlayer = new DetectivePlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(3, firstPlayer.getScore());
+        assertEquals(-1, secondPlayer.getScore());
+    }
+
+    // Tests for playWith() method for DetectivePlayer with others
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerAlwaysCheats() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new AlwaysCheatPlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(-1, firstPlayer.getScore());
+        assertEquals(3, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerAlwaysCooperates() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(2, firstPlayer.getScore());
+        assertEquals(2, secondPlayer.getScore());
+    }
+
+    @Test
+    void testFirstPlayerDetectiveSecondPlayerCopycat() {
+        Player firstPlayer = new DetectivePlayer();
+        Player secondPlayer = new CopycatPlayer();
+
+        firstPlayer.playWith(secondPlayer);
+
+        assertEquals(-1, firstPlayer.getScore());
+        assertEquals(3, secondPlayer.getScore());
     }
 }

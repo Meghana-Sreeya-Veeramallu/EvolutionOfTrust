@@ -21,7 +21,15 @@ public class CopycatPlayer extends Player {
     }
 
     @Override
+    protected void gain(){
+        this.lastOpponentMove = Move.COOPERATE;
+        super.gain();
+    }
+
+    @Override
     protected Move nextMove() {
-        return this.lastOpponentMove;
+        Move currentMove = this.lastOpponentMove;
+        this.lastOpponentMove = Move.CHEAT;
+        return currentMove;
     }
 }
