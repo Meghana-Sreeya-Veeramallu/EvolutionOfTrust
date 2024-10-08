@@ -1,17 +1,15 @@
 package org.example.Entities;
 
 import org.example.Enums.Move;
-import org.example.Enums.PlayerType;
 
 public class AlwaysCheatPlayer extends Player {
 
     public AlwaysCheatPlayer() {
-        super(PlayerType.ALWAYS_CHEAT);
+        super();
     }
 
     @Override
-    protected Move getMove() {
+    protected Move nextMove() {
         return Move.CHEAT;
     }
 }
-

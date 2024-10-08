@@ -1,36 +1,27 @@
 package org.example.Entities;
 
 import org.example.Enums.Move;
-import org.example.Enums.PlayerType;
 
 public class CopycatPlayer extends Player {
     private Move lastOpponentMove;
 
     public CopycatPlayer() {
-        super(PlayerType.COPYCAT);
+        super();
         this.lastOpponentMove = Move.CHEAT;
     }
 
     @Override
     public void playWith(Player otherPlayer) {
-        Move copycatMove = this.getMove();
-        Move opponentMove = otherPlayer.getMove();
+        Move copycatMove = this.nextMove();
+        Move opponentMove = otherPlayer.nextMove();
 
-        if (copycatMove == Move.COOPERATE) {
-            this.invest();
-            otherPlayer.gain();
-        }
-        if (opponentMove == Move.COOPERATE) {
-            this.gain();
-            otherPlayer.invest();
-        }
+        super.updateScore(copycatMove, opponentMove, otherPlayer);
 
         this.lastOpponentMove = opponentMove;
     }
 
     @Override
-    protected Move getMove() {
+    protected Move nextMove() {
         return this.lastOpponentMove;
     }
 }
-

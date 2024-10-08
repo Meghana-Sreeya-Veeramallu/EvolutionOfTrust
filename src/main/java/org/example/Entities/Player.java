@@ -1,12 +1,11 @@
 package org.example.Entities;
 
 import org.example.Enums.Move;
-import org.example.Enums.PlayerType;
 
 public abstract class Player {
     private int score;
 
-    public Player(PlayerType playerType) {
+    public Player() {
         this.score = 0;
     }
 
@@ -14,20 +13,26 @@ public abstract class Player {
         return score;
     }
 
-    public void playWith(Player otherPlayer) {
-        if (this.getMove() == Move.COOPERATE) {
+    protected void updateScore(Move playerMove, Move opponentMove, Player otherPlayer) {
+        if (playerMove == Move.COOPERATE) {
             // Player 1 cooperates - Player 1: -1, Player 2: +3
             this.invest();
             otherPlayer.gain();
         }
-        if (otherPlayer.getMove() == Move.COOPERATE) {
+        if (opponentMove == Move.COOPERATE) {
             // Player 2 cooperates - Player 1: +3, Player 2: -1
             this.gain();
             otherPlayer.invest();
         }
     }
 
-    protected abstract Move getMove();
+    public void playWith(Player otherPlayer) {
+        Move playerMove = this.nextMove();
+        Move opponentMove = otherPlayer.nextMove();
+        this.updateScore(playerMove, opponentMove, otherPlayer);
+    }
+
+    protected abstract Move nextMove();
 
     public void gain() {
         this.score += 3;
