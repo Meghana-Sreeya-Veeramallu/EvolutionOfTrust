@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.Entities.*;
+import org.example.Exceptions.CannotHaveNegativeOrZeroRounds;
 import org.example.Exceptions.CannotPlayWithoutPlayersException;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,33 @@ public class GameTest {
     @Test
     void testExceptionWhenPlayerIsNull() {
         assertThrows(CannotPlayWithoutPlayersException.class, () -> new Game(null, null));
+    }
+
+    @Test
+    void testGameWithZeroRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        assertThrows(CannotHaveNegativeOrZeroRounds.class, () -> game.play(0));
+    }
+
+    @Test
+    void testGameWithNegativeRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        assertThrows(CannotHaveNegativeOrZeroRounds.class, () -> game.play(-1));
+    }
+
+    @Test
+    void testGameWithPositiveRounds() {
+        Player firstPlayer = new AlwaysCooperatePlayer();
+        Player secondPlayer = new AlwaysCooperatePlayer();
+        Game game = new Game(firstPlayer, secondPlayer);
+
+        assertDoesNotThrow(() -> game.play(1));
     }
 
     // Tests for play(1) method

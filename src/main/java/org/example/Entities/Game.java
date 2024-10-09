@@ -1,5 +1,6 @@
 package org.example.Entities;
 
+import org.example.Exceptions.CannotHaveNegativeOrZeroRounds;
 import org.example.Exceptions.CannotPlayWithoutPlayersException;
 
 public class Game {
@@ -15,6 +16,9 @@ public class Game {
     }
 
     public void play(int rounds) {
+        if (rounds <= 0) {
+            throw new CannotHaveNegativeOrZeroRounds("Cannot have negative or zero rounds");
+        }
         for (int i = 0; i < rounds; i++) {
             firstPlayer.playWith(secondPlayer);
         }

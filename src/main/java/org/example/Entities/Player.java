@@ -2,7 +2,7 @@ package org.example.Entities;
 
 import org.example.Enums.Move;
 
-public abstract class Player {
+public abstract class Player implements Cloneable {
     private int score;
 
     public Player() {
@@ -40,5 +40,10 @@ public abstract class Player {
 
     private void invest() {
         this.score -= 1;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
